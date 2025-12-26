@@ -182,11 +182,13 @@ extension AppDelegate: NSApplicationDelegate {
             promptToAddLoginItems()
         }
 
-        // Sparkle
-        let updater = SUUpdater.shared()
-        updater?.feedURL = Constants.Application.appcastURL
-        updater?.automaticallyChecksForUpdates = AppEnvironment.current.defaults.bool(forKey: Constants.Update.enableAutomaticCheck)
-        updater?.updateCheckInterval = TimeInterval(AppEnvironment.current.defaults.integer(forKey: Constants.Update.checkInterval))
+        // Sparkle (disabled for fork version)
+        if let feedURL = Constants.Application.appcastURL {
+            let updater = SUUpdater.shared()
+            updater?.feedURL = feedURL
+            updater?.automaticallyChecksForUpdates = AppEnvironment.current.defaults.bool(forKey: Constants.Update.enableAutomaticCheck)
+            updater?.updateCheckInterval = TimeInterval(AppEnvironment.current.defaults.integer(forKey: Constants.Update.checkInterval))
+        }
 
         // Binding Events
         bind()

@@ -20,7 +20,6 @@ Clipy 是一款优秀的 macOS 剪贴板扩展应用，本版本在保留原版�
 ### 🔗 原项目
 
 - **原版仓库**: [Clipy/Clipy](https://github.com/Clipy/Clipy)
-- **官网**: https://clipy-app.com
 - **原版 README**: [查看原文](https://github.com/Clipy/Clipy/blob/master/README.md)
 
 ---

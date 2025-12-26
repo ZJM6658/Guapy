@@ -20,7 +20,8 @@ struct Constants {
         #else
             static let name = "Clipy"
         #endif
-        static let appcastURL = URL(string: "https://clipy-app.com/appcast.xml")!
+        // Fork version uses its own update source (disabled for now)
+        static let appcastURL: URL? = nil
     }
 
     struct Menu {
