@@ -25,6 +25,7 @@ final class ClipService {
     fileprivate let scheduler = SerialDispatchQueueScheduler(qos: .userInteractive)
     fileprivate let lock = NSRecursiveLock(name: "com.clipy-app.Clipy.ClipUpdatable")
     fileprivate var disposeBag = DisposeBag()
+    fileprivate var lastImageHash: Int?
 
     // MARK: - Clips
     func startMonitoring() {
@@ -78,6 +79,7 @@ final class ClipService {
 
     func incrementChangeCount() {
         cachedChangeCount.accept(cachedChangeCount.value + 1)
+        lastImageHash = nil  // Reset image hash to avoid affecting manual operations
     }
 
 }
@@ -106,6 +108,18 @@ extension ClipService {
 
     func create(with image: NSImage) {
         lock.lock(); defer { lock.unlock() }
+
+        // Calculate image hash for deduplication
+        let currentHash: Int
+        if let tiffData = image.tiffRepresentation {
+            currentHash = tiffData.count
+        } else {
+            currentHash = 0
+        }
+
+        // Skip if this is the same image as last time
+        if lastImageHash == currentHash { return }
+        lastImageHash = currentHash
 
         // Create only image data
         let data = CPYClipData(image: image)
