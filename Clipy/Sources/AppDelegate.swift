@@ -241,5 +241,23 @@ private extension AppDelegate {
                 AppEnvironment.current.clipService.create(with: image)
             })
             .disposed(by: disposeBag)
+        // Observe Clipboard Image (for WeChat, DingTalk screenshots)
+        let observerClipboardImage = AppEnvironment.current.defaults.rx
+            .observe(Bool.self, Constants.Beta.observerClipboardImage, retainSelf: false)
+            .compactMap { $0 }
+            .share(replay: 1)
+        observerClipboardImage
+            .filter { $0 }
+            .flatMapLatest { [weak self] enabled -> Observable<NSImage> in
+                guard enabled, let self = self else { return Observable.empty() }
+                return NSPasteboard.general.rx.imageChange
+            }
+            .subscribe(onNext: { [weak self] image in
+                // Check if current app is excluded
+                guard !AppEnvironment.current.excludeAppService.frontProcessIsExcludedApplication() else { return }
+                // Create clip from image
+                AppEnvironment.current.clipService.create(with: image)
+            })
+            .disposed(by: disposeBag)
     }
 }
