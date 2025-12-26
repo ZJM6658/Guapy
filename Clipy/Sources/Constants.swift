@@ -78,6 +78,7 @@ struct Constants {
         static let pasteAndDeleteHistory = "kCPYBetaPasteAndDeleteHistory"
         static let pasteAndDeleteHistoryModifier = "kCPYBetapasteAndDeleteHistoryModifier"
         static let observerScreenshot = "kCPYBetaObserveScreenshot"
+        static let observerClipboardImage = "kCPYBetaObserveClipboardImage"
     }
 
     struct Update {
