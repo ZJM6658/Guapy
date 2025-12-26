@@ -71,17 +71,12 @@ Clipy 是一款优秀的 macOS 剪贴板扩展应用，本版本在保留原版�
 
 ### 配置剪贴板图片监听
 
-该功能默认已启用。如需关闭，在终端执行：
+该功能默认已启用。如需配置：
 
-```bash
-defaults write com.clipy-app.Clipy kCPYBetaObserveClipboardImage -bool false
-```
-
-重新启用：
-
-```bash
-defaults write com.clipy-app.Clipy kCPYBetaObserveClipboardImage -bool true
-```
+1. 打开 Clipy 偏好设置
+2. 选择 "Beta" 标签页
+3. 在 "Screenshot" 部分找到 "Save clipboard images (WeChat, DingTalk, etc.)"
+4. 勾选或取消勾选该选项
 
 ---
 

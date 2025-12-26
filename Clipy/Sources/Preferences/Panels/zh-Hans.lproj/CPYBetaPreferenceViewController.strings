@@ -55,3 +55,6 @@
 
 /* Class = "NSMenuItem"; title = "Control"; ObjectID = "z3A-El-En9"; */
 "z3A-El-En9.title" = "Control";
+
+/* Class = "NSButtonCell"; title = "Save clipboard images (WeChat, DingTalk, etc.)"; ObjectID = "bGx-4R-jQk"; */
+"bGx-4R-jQk.title" = "";
