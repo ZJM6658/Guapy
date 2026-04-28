@@ -37,7 +37,9 @@ final class ClipService {
             .filter { $0 != $1 }
             .subscribe(onNext: { [weak self] changeCount, _ in
                 self?.cachedChangeCount.accept(changeCount)
-                self?.create()
+                DispatchQueue.main.async { [weak self] in
+                    self?.create()
+                }
             })
             .disposed(by: disposeBag)
         // Store types
