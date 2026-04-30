@@ -14,7 +14,6 @@ import Cocoa
 import Sparkle
 import RxCocoa
 import RxSwift
-import LoginServiceKit
 import Magnet
 import Screeen
 import RxScreeen
@@ -152,10 +151,10 @@ class AppDelegate: NSObject, NSMenuItemValidation {
     }
 
     private func toggleAddingToLoginItems(_ isEnable: Bool) {
-        let appPath = Bundle.main.bundlePath
-        LoginServiceKit.removeLoginItems(at: appPath)
-        guard isEnable else { return }
-        LoginServiceKit.addLoginItems(at: appPath)
+        // LoginServiceKit uses the deprecated LSSharedFileList API, which can
+        // crash during launch on recent macOS releases. Keep the preference
+        // value intact, but avoid touching login items until this is replaced
+        // with a modern ServiceManagement implementation.
     }
 
     private func reflectLoginItemState() {
@@ -176,11 +175,6 @@ extension AppDelegate: NSApplicationDelegate {
         CPYUtilities.initSDKs()
         // Check Accessibility Permission
         AppEnvironment.current.accessibilityService.isAccessibilityEnabled(isPrompt: true)
-
-        // Show Login Item
-        if !AppEnvironment.current.defaults.bool(forKey: Constants.UserDefaults.loginItem) && !AppEnvironment.current.defaults.bool(forKey: Constants.UserDefaults.suppressAlertForLoginItem) {
-            promptToAddLoginItems()
-        }
 
         // Sparkle (disabled for fork version)
         if let feedURL = Constants.Application.appcastURL {
